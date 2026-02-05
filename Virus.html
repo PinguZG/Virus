@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentinstag ❤️</title>
+  <style>
+    :root {
+      --bg: #141218;
+      --bg-soft: #1d1b22;
+      --card: #211f29;
+      --accent: #c94b68;
+      --accent-soft: #8c364c;
+      --accent-strong: #ff6f91;
+      --text: #f3e9f4;
+      --text-soft: #c1b3c7;
+      --danger: #f47174;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 120, 150, 0.25), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(120, 80, 140, 0.3), transparent 55%),
+        linear-gradient(135deg, #0f0c12, #16121c 45%, #1f1822 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Kleine Stitch-Silhouette im Hintergrund (SVG + Blur) */
+    .stitch-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: blur(1px);
+    }
+
+    .stitch-bg svg {
+      max-width: 60vmin;
+      max-height: 60vmin;
+    }
+
+    /* Rosen-Hintergrund-Elemente */
+    .rose {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #ffe6ec 0%, #ff8fa8 35%, #c53253 70%, #5b1829 100%);
+      box-shadow:
+        0 0 12px rgba(255, 140, 168, 0.6),
+        0 0 35px rgba(255, 80, 130, 0.4);
+      opacity: 0.18;
+      animation: float-rose 18s linear infinite;
+    }
+
+    .rose:nth-child(1) { top: 6%; left: 12%; animation-delay: -6s; }
+    .rose:nth-child(2) { top: 18%; right: 10%; animation-delay: -10s; }
+    .rose:nth-child(3) { bottom: 12%; left: 18%; animation-delay: -3s; }
+    .rose:nth-child(4) { bottom: 20%; right: 16%; animation-delay: -14s; }
+
+    @keyframes float-rose {
+      0%   { transform: translateY(0) translateX(0); }
+      50%  { transform: translateY(-10px) translateX(6px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      background: radial-gradient(circle at top, rgba(255, 155, 190, 0.12), transparent 65%),
+                  linear-gradient(145deg, rgba(40, 34, 52, 0.96), rgba(20, 17, 27, 0.98));
+      border-radius: 28px;
+      padding: 24px 20px 22px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 192, 203, 0.12);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .glow-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid transparent;
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 163, 190, 0.35), transparent 55%) border-box,
+        radial-gradient(circle at 100% 100%, rgba(193, 120, 255, 0.2), transparent 55%) border-box;
+      mix-blend-mode: screen;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+      background: linear-gradient(90deg, rgba(201, 75, 104, 0.16), rgba(145, 90, 200, 0.16));
+      border: 1px solid rgba(255, 155, 190, 0.3);
+      margin-bottom: 10px;
+    }
+
+    .tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffdbe7 0%, #ff7ba3 40%, #ae2b4a 100%);
+      box-shadow: 0 0 10px rgba(255, 140, 175, 0.7);
+    }
+
+    h1 {
+      font-size: clamp(22px, 5vw, 26px);
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-soft);
+      opacity: 0.9;
+    }
+
+    .question-mark {
+      display: inline-block;
+      color: var(--accent-strong);
+      text-shadow: 0 0 12px rgba(255, 111, 145, 0.85);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      flex: 1;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 10px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease,
+        opacity 0.18s ease,
+        flex 0.18s ease;
+      box-shadow: 0 9px 18px rgba(0, 0, 0, 0.5);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff6f91, #ff99b8);
+      color: #2b0512;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-yes.glow {
+      box-shadow:
+        0 0 16px rgba(255, 170, 200, 0.9),
+        0 0 40px rgba(255, 111, 145, 0.7);
+    }
+
+    .btn-no {
+      background: linear-gradient(135deg, #372235, #4a1f2e);
+      color: var(--text);
+    }
+
+    .btn-maybe {
+      background: linear-gradient(135deg, #2a2634, #3b3146);
+      color: var(--text-soft);
+    }
+
+    .btn-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.8);
+    }
+
+    .hint {
+      text-align: center;
+      min-height: 22px;
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hint-strong {
+      color: var(--danger);
+    }
+
+    .hint-eyes {
+      font-size: 18px;
+    }
+
+    .yey {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+      text-shadow:
+        0 0 16px rgba(255, 155, 190, 0.95),
+        0 0 40px rgba(255, 111, 145, 0.8);
+      opacity: 0;
+      transform: translateY(10px) scale(0.96);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .yey.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Finale "Ende"-Nachricht */
+    .ending {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-soft);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+    }
+
+    .ending.show {
+      opacity: 0.9;
+      transform: translateY(0);
+    }
+
+    /* Rosen-Konfetti bei "Ja" */
+    .rose-confetti {
+      position: fixed;
+      top: -10vh;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffe6ec 0%, #ff8fa8 35%, #c53253 70%, #5b1829 100%);
+      box-shadow:
+        0 0 16px rgba(255, 140, 168, 0.9),
+        0 0 40px rgba(255, 80, 130, 0.7);
+      pointer-events: none;
+      animation: fall 3.6s linear forwards;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translate3d(var(--x, 0), -10vh, 0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(var(--x, 0), 110vh, 0) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Mobile Feinheiten */
+    @media (max-width: 420px) {
+      .container {
+        padding: 20px 16px 18px;
+        border-radius: 24px;
+      }
+      .buttons {
+        gap: 8px;
+      }
+      .btn {
+        padding-block: 11px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Weiche Stitch-Silhouette im Hintergrund -->
+  <div class="stitch-bg" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <defs>
+        <linearGradient id="stitchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.5" />
+          <stop offset="50%" stop-color="#ec4899" stop-opacity="0.45" />
+          <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.4" />
+        </linearGradient>
+      </defs>
+      <!-- Ganz einfache chibi-Form, nur Silhouette -->
+      <path d="M90 40
+               C 70 15, 45 15, 40 40
+               C 35 60, 48 80, 65 85
+               C 45 90, 40 105, 42 120
+               C 45 140, 60 150, 75 152
+               L 75 165
+               C 75 175, 85 185, 100 185
+               C 115 185, 125 175, 125 165
+               L 125 152
+               C 140 150, 155 140, 158 120
+               C 160 105, 155 90, 135 85
+               C 152 80, 165 60, 160 40
+               C 155 15, 130 15, 110 40
+               Z"
+            fill="url(#stitchGrad)" />
+    </svg>
+  </div>
+
+  <!-- Dezente Rosen im Hintergrund -->
+  <div class="rose"></div>
+  <div class="rose"></div>
+  <div class="rose"></div>
+  <div class="rose"></div>
+
+  <main class="container">
+    <div class="glow-ring"></div>
+
+    <header class="header">
+      <div class="tag">
+        <span class="tag-dot"></span>
+        <span>Valentinstag</span>
+      </div>
+      <h1>
+        Kami, willst du mein Valentinstags‑Date sein
+        <span class="question-mark">?</span>
+      </h1>
+      <p class="subtitle">
+        Nur eine kleine, aber sehr wichtige Entscheidung.
+      </p>
+    </header>
+
+    <section class="buttons">
+      <button class="btn btn-yes glow" id="btnYes">Ja</button>
+      <button class="btn btn-maybe" id="btnMaybe">Vllt</button>
+      <button class="btn btn-no" id="btnNo">Nein</button>
+    </section>
+
+    <p class="hint" id="hint"></p>
+    <p class="yey" id="yey">Yeyyyyy! 🌹✨</p>
+    <p class="ending" id="ending">
+      Sehr gute Wahl getroffen, du Zahlst oder? 💌
+    </p>
+  </main>
+
+  <script>
+    const btnYes = document.getElementById("btnYes");
+    const btnNo = document.getElementById("btnNo");
+    const btnMaybe = document.getElementById("btnMaybe");
+    const hint = document.getElementById("hint");
+    const yey = document.getElementById("yey");
+    const ending = document.getElementById("ending");
+
+    let noClicks = 0;
+    let locked = false;
+
+    function updateHint(text, isStrong = false, eyesCount = 0) {
+      hint.textContent = text || "";
+      hint.classList.toggle("hint-strong", isStrong);
+      hint.classList.toggle("hint-eyes", eyesCount > 0);
+      if (eyesCount > 0) {
+        hint.textContent = "👀".repeat(eyesCount);
+      }
+    }
+
+    btnMaybe.addEventListener("click", () => {
+      if (locked) return;
+      btnMaybe.classList.add("btn-hidden");
+      updateHint("Bitte eine eindeutige Wahl treffen.", true);
+    });
+
+    btnNo.addEventListener("click", () => {
+      if (locked) return;
+      noClicks++;
+
+      if (noClicks === 1) {
+        btnNo.style.flex = "0.8";
+        btnNo.style.transform = "scale(0.9)";
+        btnYes.style.flex = "1.3";
+        btnYes.classList.add("glow");
+        updateHint("", false, 1); // ein Augen-Emoji
+      } else if (noClicks === 2) {
+        btnNo.style.flex = "0.6";
+        btnNo.style.transform = "scale(0.8)";
+        btnYes.style.flex = "1.6";
+        updateHint("", false, 2); // zwei Augen-Emojis
+      } else if (noClicks >= 3) {
+        btnNo.classList.add("btn-hidden");
+        btnYes.style.flex = "1.8";
+        updateHint("", false, 2);
+      }
+    });
+
+    btnYes.addEventListener("click", () => {
+      if (locked) return;
+      locked = true;
+
+      // Buttons ausblenden
+      btnYes.classList.add("btn-hidden");
+      btnNo.classList.add("btn-hidden");
+      btnMaybe.classList.add("btn-hidden");
+
+      // Hinweis leeren
+      updateHint("");
+
+      // Yey-Text zeigen
+      setTimeout(() => {
+        yey.classList.add("show");
+        ending.classList.add("show");
+      }, 200);
+
+      // Rosen-Konfetti starten
+      startRoseConfetti();
+    });
+
+    function startRoseConfetti() {
+      const total = 80;
+
+      for (let i = 0; i < total; i++) {
+        const rose = document.createElement("div");
+        rose.className = "rose-confetti";
+        const randomX = (Math.random() * 200 - 100).toFixed(1) + "vw";
+        const delay = (Math.random() * 1.2).toFixed(2) + "s";
+        const size = 12 + Math.random() * 12;
+
+        rose.style.setProperty("--x", randomX);
+        rose.style.left = Math.random() * 100 + "vw";
+        rose.style.animationDelay = delay;
+        rose.style.width = size + "px";
+        rose.style.height = size + "px";
+
+        document.body.appendChild(rose);
+
+        setTimeout(() => {
+          rose.remove();
+        }, 4500);
+      }
+    }
+  </script>
+</body>
+</html>
